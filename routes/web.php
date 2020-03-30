@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('reports', 'ReportController');
-Route::resource('dates', 'DateController');
-Route::post('dates/report', 'DateController@storeReport');
+Auth::routes();
+
+Route::resource('report', 'ReportController');
+Route::resource('date', 'DateController');
+Route::post('date/report/{id}', 'DateController@storeReport')->name('date.storereport');
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -13,11 +13,11 @@
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
                         Add Category
                     </button>
-                    <a href="/dates" class="btn btn-dark">Reports</a>
+                    <a href="{{ route('date.index') }}" class="btn btn-dark">Reports</a>
                     <hr>
                     @foreach($date->reports as $report)
                         <h3>{{ $report->category->name }}</h3>
-                        <p>{{ $report->content }}</p>
+                        <p>{!! nl2br($report->content) !!}</p>
                     @endforeach
                     
                 </div>
@@ -34,14 +34,14 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/dates/report" method="post"></form>
+                <form action="{{ route('date.storereport', $date->id) }}" method="post">
                     <div class="modal-body">
                     
                     @csrf
                         @foreach($categories as $category)
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="{{ $category->id }}" id="{{ $category->id }}" value="option1">
-                                <label class="form-check-label" for="{{ $category->id }}">
+                                <input class="form-check-input" type="radio" name="category_id" id="category-{{ $category->id }}" value="{{ $category->id }}">
+                                <label class="form-check-label" for="category-{{ $category->id }}">
                                     {{ $category->name }}
                                 </label>
                             </div>
@@ -49,7 +49,7 @@
                         <hr>
                         <div class="form-group">
                             <label for="content">Content:</label>
-                            <textarea class="form-control" id="content" rows="3"></textarea>
+                            <textarea class="form-control" id="content" rows="3" name="content"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

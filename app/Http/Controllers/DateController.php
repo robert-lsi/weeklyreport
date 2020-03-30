@@ -42,31 +42,31 @@ class DateController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'date' => 'required',
         ]);
 
-        $date = \App\Date::create($data);
+        $date = Date::create($data);
 
-        return redirect('/dates/'.$date->id);
+        return redirect()->route('date.show', $date->id);
     }
 
     public function storeReport(Request $request, $dateId)
     {
-
-        $data = request()->validate([
-            'content' => 'required',
+        $data = $request->validate([
             'category_id' => 'required',
+            'content' => 'required',
         ]);
 
-        $data['date_id'] = $dateId;
-        $data['category_id'] = 1;
+        $date = Date::find($dateId);
 
-        $dd{$data};
+        $report = $date->reports()->create([
+            'content' => $request->content,
+            'date_id' => $date->id,
+            'category_id' => $request->category_id
+        ]);
 
-        $report = \App\Report::create($data);
-
-        return redirect('/dates/'.$dateId);
+        return redirect()->route('date.show', $date->id);
     }
 
     /**

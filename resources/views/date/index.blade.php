@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @foreach($dates as $date)
-                        <p><a href="/dates/{{ $date->id }}">{{ $date['date'] }}</a></p>
+                        <p><a href="{{ route('date.show', $date->id) }}">{{ $date['date'] }}</a></p>
                     @endforeach
                 
                 <a href="/" class="btn btn-dark">Home</a>
